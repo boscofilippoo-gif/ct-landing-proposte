@@ -33,7 +33,7 @@
   .scheda .lettera{font-family:var(--serif);font-style:italic;color:var(--oro);font-size:1.1rem}
   .scheda .nota{padding:0 1.3rem 1rem;color:var(--testo);font-size:.88rem;line-height:1.5;border-bottom:1px solid var(--crema-2)}
   .telaio{position:relative;background:var(--crema);overflow:hidden}
-  .telaio .schermo{position:relative;margin-inline:auto;transform-origin:top center;border:0;display:block;background:#fff}
+  .telaio .schermo{position:absolute;top:0;left:0;transform-origin:top left;border:0;display:block;background:#fff}
   .azioni{padding:1rem 1.3rem 1.3rem;display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.7rem 1.2rem;border-radius:999px;text-decoration:none;font:500 .82rem/1 var(--sans);letter-spacing:.05em;transition:background-color .3s,color .3s,border-color .3s}
   .btn-pieno{background:var(--pietra);color:var(--panna)}
@@ -95,7 +95,7 @@
       f.style.width=m.w+'px';
       f.style.height=m.h+'px';
       f.style.transform='scale('+scala+')';
-      t.style.height=(m.h*scala)+'px';
+      t.style.height=Math.round(m.h*scala)+'px';
     });
   }
   function aggiornaLink(){
