@@ -363,11 +363,12 @@
 /* ---------- intro logo ---------- */
 .ctlp .intro-logo{position:fixed;inset:0;z-index:80;background:#E9E3DC;display:grid;place-items:center;transition:clip-path 1s cubic-bezier(.76,0,.24,1);clip-path:inset(0 0 0 0)}
 .ctlp .intro-logo.via{clip-path:inset(0 0 100% 0)}
-.ctlp .intro-logo svg{width:96px;height:96px;overflow:visible}
-.ctlp .intro-logo circle{fill:none;stroke:var(--oro-chiaro);stroke-width:1.2;stroke-dasharray:302;stroke-dashoffset:302;animation:ctlp-cerchio 1.1s cubic-bezier(.65,0,.35,1) forwards;transform:rotate(-90deg);transform-origin:center}
-.ctlp .intro-logo text{font:400 30px var(--serif);fill:var(--inchiostro);letter-spacing:.08em;opacity:0;animation:ctlp-fade .6s ease .75s forwards}
-@keyframes ctlp-cerchio{to{stroke-dashoffset:0}}
-@keyframes ctlp-fade{to{opacity:1}}
+.ctlp .intro-marchio{position:relative;width:min(400px,72vw);aspect-ratio:812/364}
+.ctlp .intro-marchio img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.ctlp .intro-marchio .im-disco{clip-path:inset(0 57.5% 0 0);transform-origin:20.6% 50%;opacity:0;transform:scale(.35);animation:ctlp-disco 1s cubic-bezier(.2,.8,.2,1) .15s forwards}
+.ctlp .intro-marchio .im-testo{clip-path:inset(0 100% 0 42.5%);opacity:0;animation:ctlp-testo 1.05s cubic-bezier(.65,0,.25,1) .7s forwards}
+@keyframes ctlp-disco{0%{opacity:0;transform:scale(.35)}40%{opacity:1}100%{opacity:1;transform:scale(1)}}
+@keyframes ctlp-testo{0%{opacity:1;clip-path:inset(0 100% 0 42.5%);transform:translateX(-4%)}100%{opacity:1;clip-path:inset(0 0 0 42.5%);transform:translateX(0)}}
 
 @media (prefers-reduced-motion:reduce){
   .ctlp *,.ctlp *::before,.ctlp *::after{animation:none!important;transition:none!important}
@@ -686,10 +687,11 @@
   var vista=false; try{ vista=!!sessionStorage.getItem('ctlpIntro'); sessionStorage.setItem('ctlpIntro','1'); }catch(e){}
   if(!ridotto && !vista){
     var il=document.createElement('div'); il.className='intro-logo'; il.setAttribute('aria-hidden','true');
-    il.innerHTML='<svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="47.5"/><text x="48" y="58" text-anchor="middle">CT</text></svg>';
+    var srcLogo=(document.querySelector('.stacco-logo')||{}).src||'';
+    il.innerHTML='<div class="intro-marchio"><img class="im-disco" alt="" src="'+srcLogo+'"><img class="im-testo" alt="" src="'+srcLogo+'"></div>';
     root.appendChild(il);
     var chiudi=function(){ if(il.classList.contains('via')) return; il.classList.add('via'); setTimeout(avvia,350); setTimeout(function(){il.remove()},1100); };
-    il.addEventListener('click',chiudi); setTimeout(chiudi,1700);
+    il.addEventListener('click',chiudi); setTimeout(chiudi,2500);
   } else avvia();
 
   var top=$('#ctlp-top'), apertura=$('#ctlp-apertura'), sx=$('.lastra.sx'), dx=$('.lastra.dx'),
